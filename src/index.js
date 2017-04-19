@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import App from './App';
-import Game from './components/game'
-import './index.css';
 
-import {gameMap} from 'map'
+import Game from './components/game'
+import './style.css';
+
+import gameMap from './map'
 
 ReactDOM.render(
-  <Game gameMap={gameMap}/>,
+  <Game gameMap={gameMap} />,
   document.getElementById('root')
 );

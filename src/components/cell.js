@@ -1,9 +1,12 @@
-var Cell = React.createClass({
+import React, { Component } from 'react';
+import './style.css'
 
-  render: function(){
+class Cell extends Component {
+
+  render() {
     var bOut = this.props.blackOut ? " blackout " : ""
     return(<div className={"cell " + this.props.type + bOut }/> )
 
   } // end render
 
-})
+}

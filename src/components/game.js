@@ -1,11 +1,18 @@
-var Game = React.createClass({
+import React, { Component } from 'react';
+import Cell from './cell'
+import './style.css'
 
+class Game extends Component {
 
-  randomBetween: function(min, max){
+  constructor() {
+    super()
+  }
+
+  randomBetween(min, max){
     return Math.floor(Math.random() * max) + min
-  },
+  }
 
-  componentWillMount: function(){
+  componentWillMount() {
     // generate cell object based on the letter on the map
     // this means that cell state (like monster hit points) are stored here
 
@@ -101,21 +108,21 @@ var Game = React.createClass({
 
     this.setState({cellObjs: cells})
 
-  },
+  }
 
-  componentDidMount: function(){
+  componentDidMount() {
     // attach key handler
     document.onkeydown = this.keyHandle;
-  },
+  }
 
-  getCell: function(x, y){
+  getCell(x, y) {
     // fetches cellObj given the x,y coordinates
 
     var i = this.idxFromCoords(x,y)
     return this.state.cellObjs[i]
-  },
+  }
 
-  clearCell: function(x, y){
+  clearCell(x, y) {
     // cell at x,y is removed and replaced with an emptyCell Object
 
     var state = this.state;
@@ -128,26 +135,26 @@ var Game = React.createClass({
 
     this.setState(state);
 
-  },
+  }
 
-  gainXp: function(xp){
+  gainXp(xp) {
     var state = this.state;
     state.player.xp += xp;
     state.player.level = Math.floor(state.player.xp / 100) + 1
     this.setState(state);
-  },
+  }
 
-  changeHealth: function(health){
+  changeHealth(health) {
     var state = this.state;
     state.player.health += health;
     this.setState(state);
-  },
+  }
 
-  damageClasses: function(){
+  damageClasses() {
     return [4, 6, 8, 10, 12, 20] // the standard D&D dice values
-  },
+  }
 
-  upgradeWeapon: function(){
+  upgradeWeapon() {
     var damages = this.damageClasses()
     var state = this.state;
     var currentDamage = state.player.weapon;
@@ -157,9 +164,9 @@ var Game = React.createClass({
       state.player.weapon = damages[idx + 1]
     }
 
-  },
+  }
 
-  keyHandle: function(e){
+  keyHandle(e) {
 
     var keyCode = e.keyCode;
     if([37, 38, 39, 40].indexOf(keyCode) > -1) {
@@ -308,9 +315,8 @@ var Game = React.createClass({
 
       var result = _playerAttack(badGuy);
       if(!result){_badGuyAttack();}
-
-
     }
+
     function pickupWeapon(weaponCell){
       console.log("hey there's a weapon!")
 
@@ -318,6 +324,7 @@ var Game = React.createClass({
       game.clearCell(weaponCell);
 
     }
+
     function pickupHealth(healthCell){
       // pick up the health pack.
       // add to heealth
@@ -330,33 +337,33 @@ var Game = React.createClass({
     var cellObj = _findCell(keyCode)
     if(cellObj !== null){interact(cellObj);}
 
-  },
+  }
 
-  coordsFromIdx: function(i){
+  coordsFromIdx(i) {
     // returns x,y coordinates based on an index
 
     var width = Math.sqrt(this.props.gameMap.length);
     var x = i % width;
     var y = Math.floor(i / width);
     return({x:x, y:y})
-  },
+  }
 
-  idxFromCoords: function(x,y){
+  idxFromCoords(x,y) {
     // returns an index from x,y cordinates
 
     var gridSide = Math.sqrt(this.props.gameMap.length)
     return (y *  gridSide) + x
 
-  },
+  }
 
-  distance: function(x1, y1, x2, y2){
+  distance(x1, y1, x2, y2) {
     // returns the distance from cell1 to cell2
     var xs = Math.pow(x2 - x1, 2)
     var ys = Math.pow(y2 - y1, 2)
     return Math.sqrt(xs + ys)
-  },
+  }
 
-  getInitialState: function(){
+  getInitialState() {
     // get player's initial loc
     var game = this;
     function getPlayerLoc(gameMap){
@@ -381,9 +388,9 @@ var Game = React.createClass({
       }
     }
 
-  },
+  }
 
-  gameOver: function(win){
+  gameOver(win) {
     // the game is over
     // win(bool) if the player won the game
 
@@ -396,10 +403,9 @@ var Game = React.createClass({
     }
     this.setState(state)
 
-  },
+  }
 
-
-  eachCell: function(cellObj, i, arr){
+  eachCell(cellObj, i, arr) {
     // contructs a cell based on its value.
     //cell is shown if both x and y are within 5 from playerX
 
@@ -417,9 +423,9 @@ var Game = React.createClass({
           key={i}
           id={i}
           ref={i} />)
-  },
+  }
 
-  renderGame: function(){
+  renderGame() {
 
     return (
       <div className="game">
@@ -432,9 +438,9 @@ var Game = React.createClass({
         {this.state.cellObjs.map(this.eachCell)}
       </div>
     )
-  },
+  }
 
-  renderGameOver: function(){
+  renderGameOver() {
     return (
       <div className="game">
         <ul className="list-inline dashboard text-center">
@@ -447,9 +453,9 @@ var Game = React.createClass({
         {this.state.cellObjs.map(this.eachCell)}
       </div>
     )
-  },
+  }
 
-  render: function(){
+  render() {
 
     if(this.state.gameWon === undefined){
       return this.renderGame()
@@ -457,4 +463,6 @@ var Game = React.createClass({
       return this.renderGameOver()
     }
   }
-})
+}
+
+export default Game;
