@@ -1,11 +1,27 @@
 import React, { Component } from 'react';
 import Cell from './cell'
-import './style.css'
+import '../style.css'
 
 class Game extends Component {
 
   constructor() {
     super()
+    this.getCell = this.getCell.bind(this);
+    this.clearCell = this.clearCell.bind(this);
+    this.getCell = this.getCell.bind(this);
+    this.clearCell = this.clearCell.bind(this);
+    this.gainXp = this.gainXp.bind(this);
+    this.changeHealth = this.changeHealth.bind(this);
+    this.upgradeWeapon = this.upgradeWeapon.bind(this);
+    this.keyHandle = this.keyHandle.bind(this);
+    this.coordsFromIdx = this.coordsFromIdx.bind(this);
+    this.idxFromCoords = this.idxFromCoords.bind(this);
+    this.gameOver = this.gameOver.bind(this);
+    this.eachCell = this.eachCell.bind(this);
+    this.renderGame = this.renderGame.bind(this);
+    this.renderGameOver = this.renderGameOver.bind(this);
+    this.render = this.render.bind(this);
+
   }
 
   randomBetween(min, max){
@@ -13,10 +29,24 @@ class Game extends Component {
   }
 
   componentWillMount() {
+    // attach key handler
+    document.onkeydown = this.keyHandle;
+    // get player's initial loc
+    var game = this;
+    function getPlayerLoc(gameMap){
+
+      for(var i=0; i<gameMap.length; i++){
+        var char = gameMap[i];
+        if(char == "P"){return game.coordsFromIdx(i)}
+      }
+    }
+
+    var playerLoc = getPlayerLoc(this.props.gameMap);
+
     // generate cell object based on the letter on the map
     // this means that cell state (like monster hit points) are stored here
 
-    var cells = this.state.cellObjs;
+    var cells = [];
     for(var c=0; c<this.props.gameMap.length; c++){
       var cellValue = this.props.gameMap[c];
       var coords = this.coordsFromIdx(c)
@@ -106,13 +136,18 @@ class Game extends Component {
       } // end switch
     } // end loop
 
-    this.setState({cellObjs: cells})
+    this.setState({
+      cellObjs: cells,  // an array of objects representing a cell
+      player: {
+        loc: {x:playerLoc.x, y:playerLoc.y},
+        hp: 50,
+        level: 1,
+        weapon: 4,
+        xp: 0,
+        health: 100
+      }
+    })
 
-  }
-
-  componentDidMount() {
-    // attach key handler
-    document.onkeydown = this.keyHandle;
   }
 
   getCell(x, y) {
@@ -361,33 +396,6 @@ class Game extends Component {
     var xs = Math.pow(x2 - x1, 2)
     var ys = Math.pow(y2 - y1, 2)
     return Math.sqrt(xs + ys)
-  }
-
-  getInitialState() {
-    // get player's initial loc
-    var game = this;
-    function getPlayerLoc(gameMap){
-
-      for(var i=0; i<gameMap.length; i++){
-        var char = gameMap[i];
-        if(char == "P"){return game.coordsFromIdx(i)}
-      }
-    }
-
-    var playerLoc = getPlayerLoc(this.props.gameMap);
-
-    return {
-      cellObjs: [],  // an array of objects representing a cell
-      player: {
-        loc: {x:playerLoc.x, y:playerLoc.y},
-        hp: 50,
-        level: 1,
-        weapon: 4,
-        xp: 0,
-        health: 100
-      }
-    }
-
   }
 
   gameOver(win) {

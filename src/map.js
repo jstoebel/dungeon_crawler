@@ -33,20 +33,6 @@ function placeStuff(starterMap){
     })
   })
   return dungeon;
-  // for(thing in things){
-  //   var qty = things[thing];
-  //   for(var i=0; i<qty; i++){
-  //
-  //     while(true){
-  //       var idx = Math.floor(Math.random() * starterMap.length - 1) + 0
-  //       if(starterMap[idx] == "F"){
-  //         dungeon[idx] = thing;
-  //         break;
-  //
-  //       }
-  //     }
-  //   }
-  // }
 
 }
 

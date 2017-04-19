@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './style.css'
+import '../style.css'
 
 class Cell extends Component {
 
@@ -10,3 +10,5 @@ class Cell extends Component {
   } // end render
 
 }
+
+export default Cell;
