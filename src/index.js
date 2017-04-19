@@ -1,9 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+// import App from './App';
+import Game from './components/game'
 import './index.css';
 
+import {gameMap} from 'map'
+
 ReactDOM.render(
-  <App />,
+  <Game gameMap={gameMap}/>,
   document.getElementById('root')
 );
