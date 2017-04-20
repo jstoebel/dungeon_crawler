@@ -1,5 +1,5 @@
 # Dungeon Crawler
-A React based Roguelike Dungeon Crawler Game with freecodecamp.com built in
+A React based Roguelike Dungeon Crawler Game with freecodecamp.com. [https://jstoebel-dungeon-crawler.herokuapp.com/](https://jstoebel-dungeon-crawler.herokuapp.com/)
 
 
 The game accomplishes the following user stories:
@@ -17,7 +17,7 @@ The game accomplishes the following user stories:
 ## Implementation notes
 
  - Each square on the map is a React component called `Cell`.
- - Each `Cell` has as its props its contents. One of the following:
+ - Each `Cell` has as its contents as its props. They are one of the following:
     - empty
     - player
     - a monster
@@ -35,4 +35,4 @@ The game accomplishes the following user stories:
       - weapon -> upgrade weapon strength
       - health -> increase health (limit 100)
 
-  - Additionally, there are several methods to handle the altering of state. For example `pickupHealth` increases the health of the player by 10, but with an upper limit of 100. `upgradeWeapon` increases the strength of the players damage according to specific logic. In other words, dedicated functions are responsible for altering parts of the state. In the future I would like to refactor to have Redux assume this responsability.
+  - Additionally, there are several dedicated methods to handle the altering of state. For example `pickupHealth` increases the health of the player by 10. `upgradeWeapon` increases the strength of the players damage according to specific logic. In other words, dedicated functions are responsible for altering parts of the state. In the future I would like to refactor to have Redux assume this responsibility.
